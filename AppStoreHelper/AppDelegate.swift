@@ -13,9 +13,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    var listWireframe = ListWireframe()
+    let rootWireframe = RootWireframe()
+    
+    let listPresenter = ListPresenter()
+    let listDataManager = ListDataManager()
+    let listInteractor = ListInteractor()
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        listInteractor.listViewPresenter = listPresenter
+        
+        listPresenter.listInteractor = listInteractor
+        listPresenter.listViewRouter = listWireframe
+        
+        let genre = genres()
+        genre.name = "금융"
+        genre.id = 6015
+        
+        listPresenter.genre = genre
+        
+        listWireframe.listPresenter = listPresenter
+        listWireframe.rootWireframe = rootWireframe
+        
+        listWireframe.presentInterface(fromWindow: window!)
+        
+        
+        
+        
         return true
     }
 
